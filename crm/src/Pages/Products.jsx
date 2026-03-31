@@ -99,12 +99,12 @@ export default function Products() {
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold">Manage Products</h1>
-                        <p className="text-slate-400 mt-1">Manage your test banks and study materials</p>
+                        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Manage Products</h1>
+                        <p className="text-slate-500 dark:text-slate-400 mt-1">Manage your test banks and study materials</p>
                     </div>
                     <button 
                         onClick={() => handleOpenModal()}
-                        className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-blue-600/20"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition-all shadow-lg shadow-blue-600/20"
                     >
                         + Add New Product
                     </button>
@@ -117,36 +117,36 @@ export default function Products() {
                 ) : (
                     <div className="grid gap-4">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 flex items-center gap-6 hover:bg-slate-800 transition-colors">
-                                <div className="w-20 h-24 bg-slate-700 rounded-lg overflow-hidden flex-shrink-0">
+                            <div key={product.id} className="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 flex items-center gap-6 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm">
+                                <div className="w-20 h-24 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden flex-shrink-0">
                                     {product.image_url ? (
                                         <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-slate-500">No Image</div>
+                                        <div className="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-500">No Image</div>
                                     )}
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">{product.category?.name || 'Uncategorized'}</span>
-                                            <h3 className="text-xl font-bold mt-1">{product.name}</h3>
-                                            <p className="text-slate-400 text-sm line-clamp-1 mt-1">{product.description}</p>
+                                            <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{product.category?.name || 'Uncategorized'}</span>
+                                            <h3 className="text-xl font-bold mt-1 text-slate-900 dark:text-white">{product.name}</h3>
+                                            <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-1 mt-1">{product.description}</p>
                                         </div>
                                         <div className="text-right">
-                                            <div className="text-xl font-bold text-emerald-400">${product.price}</div>
-                                            <div className="text-xs text-slate-500 mt-1">ID: #{product.id}</div>
+                                            <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">${product.price}</div>
+                                            <div className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-medium">ID: #{product.id}</div>
                                         </div>
                                     </div>
-                                    <div className="flex gap-3 mt-4">
+                                    <div className="flex gap-4 mt-4">
                                         <button 
                                             onClick={() => handleOpenModal(product)}
-                                            className="text-sm font-bold text-slate-300 hover:text-white transition-colors"
+                                            className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors"
                                         >
                                             Edit Details
                                         </button>
                                         <button 
                                             onClick={() => handleDelete(product.id)}
-                                            className="text-sm font-bold text-red-400 hover:text-red-300 transition-colors"
+                                            className="text-sm font-bold text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors"
                                         >
                                             Delete
                                         </button>
@@ -161,9 +161,9 @@ export default function Products() {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                    <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
-                        <div className="p-6 border-b border-slate-800">
-                            <h2 className="text-xl font-bold">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl transition-all duration-300">
+                        <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+                            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             {error && (
@@ -172,26 +172,26 @@ export default function Products() {
                                 </div>
                             )}
                             <div>
-                                <label className="block text-sm font-bold text-slate-400 mb-1">Product Name</label>
+                                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-1">Product Name</label>
                                 <input 
                                     type="text" 
                                     required
                                     value={formData.name}
                                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors text-slate-900 dark:text-white"
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <div className="flex justify-between items-center mb-1">
-                                        <label className="block text-sm font-bold text-slate-400">Category</label>
-                                        <a href="/categories" className="text-[10px] text-blue-400 hover:underline font-bold">Manage Categories</a>
+                                        <label className="block text-sm font-bold text-slate-500 dark:text-slate-400">Category</label>
+                                        <a href="/categories" className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-bold">Manage Categories</a>
                                     </div>
                                     <select 
                                         required
                                         value={formData.category_id}
                                         onChange={(e) => setFormData({...formData, category_id: e.target.value})}
-                                        className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors text-slate-900 dark:text-white"
                                     >
                                         {categories.map(cat => (
                                             <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -199,42 +199,42 @@ export default function Products() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-400 mb-1">Price (USD)</label>
+                                    <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-1">Price (USD)</label>
                                     <input 
                                         type="number" 
                                         step="0.01"
                                         required
                                         value={formData.price}
                                         onChange={(e) => setFormData({...formData, price: e.target.value})}
-                                        className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors text-slate-900 dark:text-white"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-slate-400 mb-1">Description</label>
+                                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-1">Description</label>
                                 <textarea 
                                     required
                                     rows="4"
                                     value={formData.description}
                                     onChange={(e) => setFormData({...formData, description: e.target.value})}
-                                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors resize-none"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors resize-none text-slate-900 dark:text-white"
                                 ></textarea>
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-slate-400 mb-1">Image URL</label>
+                                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-1">Image URL</label>
                                 <input 
                                     type="text" 
                                     value={formData.image_url}
                                     onChange={(e) => setFormData({...formData, image_url: e.target.value})}
                                     placeholder="https://images.unsplash.com/..."
-                                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 transition-colors text-slate-900 dark:text-white"
                                 />
                             </div>
                             <div className="flex gap-3 pt-4">
                                 <button 
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-lg transition-colors text-center"
+                                    className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-white font-bold py-2 rounded-lg transition-colors text-center border border-slate-200 dark:border-slate-700"
                                 >
                                     Cancel
                                 </button>

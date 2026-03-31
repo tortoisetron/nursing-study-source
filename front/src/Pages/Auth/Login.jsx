@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '@/utils/api';
 import { useAuth } from '@/Context/AuthContext';
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +47,7 @@ export default function Login() {
             }
         } catch (error) {
             console.error('Login failed', error);
-            alert('Invalid credentials');
+            setErrorMessage('Invalid email or password. Please try again.');
         } finally {
             setLoadingLocal(false);
         }
@@ -57,74 +58,74 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-[#E5F0FA] flex flex-col items-center justify-center py-10 px-4 font-sans text-slate-800" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center py-10 px-4 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
             
             {/* Header / Logo */}
             <div className="mb-8 text-center">
-                <Link to="/" className="inline-flex items-center justify-center gap-3 mb-6">
-                    <div className="text-blue-600 flex items-center justify-center">
-                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <Link to="/" className="inline-flex items-center justify-center gap-3 mb-6 group">
+                    <div className="text-blue-600 dark:text-blue-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                         <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
-                    <span className="font-extrabold text-[1.4rem] tracking-tight text-[#111827]">Nursing Study Source</span>
+                    <span className="font-black text-2xl tracking-tighter text-slate-900 dark:text-white transition-colors">Phungashang</span>
                 </Link>
-                <h1 className="text-[1.7rem] font-bold text-[#1e3a8a] mb-2 tracking-tight">Welcome Back</h1>
-                <p className="text-gray-500 text-[0.95rem]">Sign in to your account to continue</p>
+                <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight transition-colors">Welcome Back</h1>
+                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium transition-colors">Sign in to your account to continue</p>
             </div>
 
             {/* Login Card */}
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] w-full max-w-[420px] p-8 border border-gray-100">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl dark:shadow-none w-full max-w-[420px] p-8 border border-slate-100 dark:border-slate-800 transition-colors duration-300">
                 {errorMessage && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg flex items-center gap-3 animate-shake">
+                    <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 text-sm rounded-xl flex items-center gap-3 animate-shake transition-colors">
                         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <p className="font-medium">{errorMessage}</p>
+                        <p className="font-semibold">{errorMessage}</p>
                     </div>
                 )}
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     
                     {/* Email */}
                     <div>
-                        <label className="block text-sm font-bold text-[#374151] mb-1.5 flex items-center gap-1">
-                            Email Address<span className="text-red-500">*</span>
+                        <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+                            Email Address
                         </label>
                         <input 
                             type="email" 
                             required
-                            placeholder="Email Address"
+                            placeholder="name@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none transition-colors bg-white shadow-sm placeholder:text-gray-400"
+                            className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500"
                         />
                     </div>
 
                     {/* Password */}
                     <div>
-                        <label className="block text-sm font-bold text-[#374151] mb-1.5 flex items-center gap-1">
-                            Password<span className="text-red-500">*</span>
+                        <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+                            Password
                         </label>
                         <input 
                             type="password" 
                             required
-                            placeholder="Password"
+                            placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none transition-colors bg-white shadow-sm placeholder:text-gray-400"
+                            className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500"
                         />
                     </div>
 
                     {/* Remember & Forgot */}
                     <div className="flex items-center justify-between pt-1">
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <label className="flex items-center gap-2 cursor-pointer group">
                             <input 
                                 type="checkbox" 
                                 checked={remember}
                                 onChange={(e) => setRemember(e.target.checked)}
-                                className="w-[18px] h-[18px] text-blue-600 bg-white border-2 border-gray-300 rounded focus:ring-blue-500"
+                                className="w-5 h-5 text-blue-600 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded focus:ring-blue-500 transition-colors"
                             />
-                            <span className="text-sm font-medium text-gray-500">Remember me</span>
+                            <span className="text-sm font-medium text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">Remember me</span>
                         </label>
-                        <Link to="/forgot-password" className="text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">
+                        <Link to="/forgot-password" disabled className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
                             Forgot Password?
                         </Link>
                     </div>
@@ -133,7 +134,7 @@ export default function Login() {
                     <button 
                         type="submit" 
                         disabled={loadingLocal}
-                        className="w-full py-3.5 mt-2 bg-[#1e40af] text-white font-bold text-sm rounded-lg hover:bg-[#1e3a8a] transition-colors shadow-md disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full py-4 bg-blue-600 dark:bg-blue-500 text-white font-black text-sm rounded-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-all shadow-lg shadow-blue-600/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform active:scale-95"
                     >
                         {loadingLocal ? (
                             <>
@@ -148,16 +149,16 @@ export default function Login() {
 
                     {/* Divider */}
                     <div className="flex items-center gap-3 my-6">
-                        <div className="flex-1 h-px bg-gray-200"></div>
-                        <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Or continue with</span>
-                        <div className="flex-1 h-px bg-gray-200"></div>
+                        <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800"></div>
+                        <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest transition-colors">Or continue with</span>
+                        <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800"></div>
                     </div>
 
                     {/* Google Button */}
                     <button 
                         type="button"
                         onClick={handleGoogleAuth}
-                        className="w-full py-3 bg-white border border-gray-200 text-[#374151] font-bold text-sm rounded-lg hover:bg-gray-50 transition-colors shadow-sm flex items-center justify-center gap-3"
+                        className="w-full py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white font-bold text-sm rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm flex items-center justify-center gap-3 transform active:scale-95"
                     >
                         <svg className="w-5 h-5" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -168,17 +169,21 @@ export default function Login() {
                         Continue with Google
                     </button>
                     
-                    <div className="text-center mt-6 pt-2 text-[13px]">
-                         <span className="text-gray-500 font-medium">Don't have an account? </span>
-                         <Link to="/register" className="font-bold text-blue-600 hover:text-blue-800">Sign up here</Link>
+                    <div className="text-center mt-8 pt-2 text-sm">
+                         <span className="text-slate-500 dark:text-slate-400 font-medium transition-colors">Don't have an account? </span>
+                         <Link to="/register" className="font-bold text-blue-600 dark:text-blue-400 hover:underline transition-all">Sign up here</Link>
                     </div>
                 </form>
             </div>
 
-            <div className="mt-10">
-                <Link to="/" className="text-[13px] font-medium text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-1.5">
-                    <span className="text-gray-400">←</span> Back to home
+            <div className="mt-12 flex flex-col items-center gap-6">
+                <Link to="/" className="text-sm font-bold text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-all flex items-center gap-2 group">
+                    <span className="group-hover:-translate-x-1 transition-transform">←</span> Back to home
                 </Link>
+                
+                <p className="text-[10px] text-slate-400 dark:text-slate-600 uppercase font-bold tracking-widest">
+                    Safe • Secure • Guaranteed
+                </p>
             </div>
 
         </div>

@@ -1,13 +1,15 @@
-import { Link } from '@inertiajs/react';
+import { Link } from 'react-router-dom';
 
 export default function ResponsiveNavLink({
     active = false,
     className = '',
     children,
+    to,
     ...props
 }) {
     return (
         <Link
+            to={to}
             {...props}
             className={`flex w-full items-start border-l-4 py-2 pe-4 ps-3 ${
                 active

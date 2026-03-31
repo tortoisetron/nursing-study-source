@@ -76,7 +76,7 @@ export default function ExamInterface() {
             <header className="fixed top-0 left-0 right-0 bg-white border-b border-slate-100 z-50">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <Link to="/" className="text-xl font-black text-primary">NursingExamSource</Link>
+                        <Link to="/" className="text-xl font-black text-primary">Phungashang</Link>
                         <div className="h-6 w-px bg-slate-200"></div>
                         <h2 className="font-bold text-slate-700 truncate max-w-xs">{exam.title}</h2>
                     </div>

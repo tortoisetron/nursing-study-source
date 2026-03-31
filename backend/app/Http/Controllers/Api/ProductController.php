@@ -11,12 +11,19 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return response()->json(Product::with('category')->latest()->get());
+        // Bypass organization filtering to allow all products and categories to be seen on the public listing
+        return response()->json(
+            Product::withoutGlobalScopes()
+                ->with(['category' => fn($q) => $q->withoutGlobalScopes()])
+                ->latest()
+                ->get()
+        );
     }
 
     public function categories()
     {
-        return response()->json(\App\Models\Category::all(['id', 'name']));
+        // Bypass organization filtering to allow all categories to be seen on the public listing
+        return response()->json(\App\Models\Category::withoutGlobalScopes()->get(['id', 'name']));
     }
 
     public function store(Request $request)
@@ -39,9 +46,13 @@ class ProductController extends Controller
         ], 201);
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
-        return response()->json($product->load('category'));
+        $product = Product::withoutGlobalScopes()
+            ->with(['category' => fn($q) => $q->withoutGlobalScopes()])
+            ->findOrFail($id);
+
+        return response()->json($product);
     }
 
     public function update(Request $request, Product $product)

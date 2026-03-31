@@ -10,10 +10,10 @@ export default function Onboarding() {
     const navigate = useNavigate();
 
     const categories = [
-        { id: 'nclex-rn', name: 'NCLEX-RN', icon: '🩺' },
-        { id: 'nclex-pn', name: 'NCLEX-PN', icon: '💉' },
-        { id: 'ati-teas', name: 'ATI TEAS', icon: '📚' },
-        { id: 'hes-a2', name: 'HESI A2', icon: '🧪' }
+        { id: 'sciences', name: 'Sciences', icon: '🧪' },
+        { id: 'humanities', name: 'Humanities', icon: '📜' },
+        { id: 'math', name: 'Mathematics', icon: '🧮' },
+        { id: 'business', name: 'Business', icon: '📊' }
     ];
 
     const paths = [
@@ -43,7 +43,7 @@ export default function Onboarding() {
                         <h1 className="text-4xl font-black mb-4 text-center bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
                             Let's tailor your preparation.
                         </h1>
-                        <p className="text-slate-400 text-center mb-12 text-lg">Which nursing category are you focusing on?</p>
+                        <p className="text-slate-400 text-center mb-12 text-lg">Which subject category are you focusing on?</p>
                         
                         <div className="grid grid-cols-2 gap-4">
                             {categories.map((cat) => (

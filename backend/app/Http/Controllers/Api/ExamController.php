@@ -11,11 +11,15 @@ class ExamController extends Controller
 {
     public function index()
     {
-        return response()->json(Exam::with('category')->get());
+        return response()->json(Exam::withoutGlobalScopes()->with('category')->get());
     }
 
-    public function show(Exam $exam)
+    public function show($id)
     {
-        return response()->json($exam->load(['category', 'questions']));
+        $exam = Exam::withoutGlobalScopes()
+            ->with(['category' => fn($q) => $q->withoutGlobalScopes(), 'questions'])
+            ->findOrFail($id);
+            
+        return response()->json($exam);
     }
 }

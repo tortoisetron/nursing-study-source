@@ -2,31 +2,35 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '@/Context/AuthContext';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const { user, logout } = useAuth();
+    const location = useLocation();
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    if (!user) return null;
+
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300">
+            <nav className="border-b border-gray-100 bg-white dark:border-slate-800 dark:bg-slate-900 transition-colors duration-300">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                <Link to="/">
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-blue-600 dark:text-blue-400" />
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    to="/dashboard"
+                                    active={location.pathname === '/dashboard'}
                                 >
                                     Dashboard
                                 </NavLink>
@@ -40,7 +44,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
+                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-slate-900 dark:text-gray-400 dark:hover:text-gray-300"
                                             >
                                                 {user.name}
 
@@ -62,17 +66,16 @@ export default function AuthenticatedLayout({ header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link
-                                            href={route('profile.edit')}
+                                            to="/profile"
                                         >
                                             Profile
                                         </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
+                                        <button
+                                            onClick={logout}
+                                            className="block w-full px-4 py-2 text-start text-sm leading-5 text-red-600 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
                                         >
                                             Log Out
-                                        </Dropdown.Link>
+                                        </button>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -85,7 +88,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         (previousState) => !previousState,
                                     )
                                 }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
+                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-slate-800 dark:hover:text-gray-400 dark:focus:bg-slate-800 dark:focus:text-gray-400"
                             >
                                 <svg
                                     className="h-6 w-6"
@@ -129,14 +132,14 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            to="/dashboard"
+                            active={location.pathname === '/dashboard'}
                         >
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
+                    <div className="border-t border-gray-200 pb-1 pt-4 dark:border-slate-800 transition-colors">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800 dark:text-gray-200">
                                 {user.name}
@@ -147,23 +150,22 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
+                            <ResponsiveNavLink to="/profile">
                                 Profile
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route('logout')}
-                                as="button"
+                            <button
+                                onClick={logout}
+                                className="block w-full px-4 py-2 text-start text-sm leading-5 text-red-600 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
                             >
                                 Log Out
-                            </ResponsiveNavLink>
+                            </button>
                         </div>
                     </div>
                 </div>
             </nav>
 
             {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
+                <header className="bg-white shadow dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 transition-colors">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
@@ -171,6 +173,7 @@ export default function AuthenticatedLayout({ header, children }) {
             )}
 
             <main>{children}</main>
+            
         </div>
     );
 }
