@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToOrganization;
+
 class Category extends Model
 {
-    protected $fillable = ['name', 'slug', 'description'];
+    use BelongsToOrganization;
+
+    protected $fillable = ['organization_id', 'name', 'slug', 'description'];
 
     public function products()
     {

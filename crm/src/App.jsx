@@ -33,9 +33,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={(auth && auth.organization_id) ? <Navigate to="/" /> : <Login setAuth={setAuth} authUserState={auth} />} />
+        <Route path="/login" element={(auth && (auth.organization_id || auth.role === 'organization' || auth.role === 'admin')) ? <Navigate to="/" /> : <Login setAuth={setAuth} authUserState={auth} />} />
         
-        <Route element={auth && auth.organization_id ? <Layout /> : <Navigate to="/login" />}>
+        <Route element={(auth && (auth.organization_id || auth.role === 'organization' || auth.role === 'admin')) ? <Layout /> : <Navigate to="/login" />}>
           <Route path="/" element={<AdminDashboard />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/products" element={<Products />} />

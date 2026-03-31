@@ -50,7 +50,7 @@ export default function Login({ setAuth, authUserState }) {
                     <p className="text-sm text-gray-400">Sign in to your organisation's environment</p>
                 </div>
                 
-                {authUserState && !authUserState.organization_id && (
+                {authUserState && !authUserState.organization_id && (authUserState.role !== 'organization' && authUserState.role !== 'admin') && (
                     <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-3 rounded-lg mb-6 text-center">
                         Warning: Logged in as normal user ({authUserState.email}). This portal requires an organization admin account.
                     </div>

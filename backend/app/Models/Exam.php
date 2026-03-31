@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToOrganization;
+
 class Exam extends Model
 {
-    protected $fillable = ['category_id', 'title', 'description', 'time_limit'];
+    use BelongsToOrganization;
+
+    protected $fillable = ['organization_id', 'category_id', 'title', 'description', 'time_limit'];
 
     public function category()
     {

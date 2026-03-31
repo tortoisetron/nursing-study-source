@@ -47,13 +47,15 @@ class RegisteredUserController extends Controller
                 'phone' => $request->admin_phone ?? null,
             ]);
 
-            Organization::create([
+            $org = Organization::create([
                 'name' => $request->org_name,
                 'email' => $request->org_email,
                 'phone' => $request->org_phone ?? null,
                 'address' => $request->org_address ?? null,
                 'admin_id' => $user->id,
             ]);
+
+            $user->update(['organization_id' => $org->id]);
         } else {
             // Individual or Student
             $request->validate([

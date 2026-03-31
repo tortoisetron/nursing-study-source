@@ -15,6 +15,11 @@ export const AuthProvider = ({ children }) => {
         
         try {
             const res = await api.get('/user');
+            if (res.data.role === 'organization') {
+               // Redirect to CRM and don't set user state on front
+               window.location.href = 'http://localhost:5174';
+               return;
+            }
             setUser(res.data);
         } catch (err) {
             setUser(null);

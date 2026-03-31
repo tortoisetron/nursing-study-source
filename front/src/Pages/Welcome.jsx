@@ -128,26 +128,28 @@ export default function Welcome() {
                 </section>
 
                 {/* Featured Test Banks - Row 1 */}
-                <section className="bg-white py-20 px-4">
-                    <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
-                        <div className="text-center mb-12">
-                            <h2 className="text-2xl font-bold text-[#111827] mb-2">Featured Test Banks</h2>
-                            <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-                        </div>
+                {topRowProducts.length > 0 && (
+                    <section className="bg-white py-20 px-4">
+                        <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
+                            <div className="text-center mb-12">
+                                <h2 className="text-2xl font-bold text-[#111827] mb-2">Featured Test Banks</h2>
+                                <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+                            </div>
 
-                        {loading ? (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                                {[1, 2, 3, 4].map(i => <div key={i} className="bg-gray-100 rounded-xl h-[400px] animate-pulse"></div>)}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                                {(topRowProducts.length > 0 ? topRowProducts : placeholderBooks).map((product, i) => (
-                                    <ProductCard key={product.id || i} product={product} />
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </section>
+                            {loading ? (
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="bg-gray-100 rounded-xl h-[400px] animate-pulse"></div>)}
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                                    {(topRowProducts.length > 0 ? topRowProducts : placeholderBooks).map((product, i) => (
+                                        <ProductCard key={product.id || i} product={product} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
 
                 {/* Designed for High-Pressure Programs */}
                 <section className="relative w-full bg-white overflow-hidden py-16 md:py-24 min-h-[600px] flex items-center border-t border-gray-100">
@@ -216,26 +218,28 @@ export default function Welcome() {
                 </section>
 
                 {/* Featured Test Banks - Row 2 */}
-                <section className="bg-white py-20 px-4">
-                    <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
-                        <div className="text-center mb-12">
-                            <h2 className="text-2xl font-bold text-[#111827] mb-2">Featured Test Banks</h2>
-                            <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-                        </div>
+                {bottomRowProducts.length > 0 && (
+                    <section className="bg-white py-20 px-4">
+                        <div className="max-w-[1440px] mx-auto px-4 lg:px-8">
+                            <div className="text-center mb-12">
+                                <h2 className="text-2xl font-bold text-[#111827] mb-2">Featured Test Banks</h2>
+                                <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+                            </div>
 
-                        {loading ? (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                                {[1, 2, 3, 4].map(i => <div key={i} className="bg-gray-100 rounded-xl h-[400px] animate-pulse"></div>)}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                                {(bottomRowProducts.length > 0 ? bottomRowProducts : placeholderBooks.slice().reverse()).map((product, i) => (
-                                    <ProductCard key={product.id || i} product={product} />
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </section>
+                            {loading ? (
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                                    {[1, 2, 3, 4].map(i => <div key={i} className="bg-gray-100 rounded-xl h-[400px] animate-pulse"></div>)}
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                                    {(bottomRowProducts).map((product, i) => (
+                                        <ProductCard key={product.id || i} product={product} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
 
                 {/* What Students Say */}
 

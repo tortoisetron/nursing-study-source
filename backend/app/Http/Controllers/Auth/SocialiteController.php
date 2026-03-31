@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\Log;
 
 class SocialiteController extends Controller
 {
-    public function redirect()
+    public function redirect(\Illuminate\Http\Request $request)
     {
+        $role = $request->query('role', 'individual');
+        session(['socialite_role' => $role]);
+
         return Socialite::driver('google')->stateless()->redirect();
     }
 
@@ -21,24 +24,40 @@ class SocialiteController extends Controller
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
             
-            // Check if user exists by email, otherwise create generic individual account
+            $role = session('socialite_role', 'individual');
+
+            // Check if user exists by email, otherwise create account with correct role
             $user = User::firstOrCreate(
                 ['email' => $googleUser->email],
                 [
                     'name' => $googleUser->name,
                     'password' => bcrypt(Str::random(16)),
-                    'role' => 'individual',
+                    'role' => $role,
                 ]
             );
 
+            // Ensure the role is updated even if user existed but was created differently before
+            // Or just leave it if it's firstOrCreate?
+            // Actually firstOrCreate only creates if not found. If user existed, we won't change role.
+            // But if user was an organization and they logged in with individual selection... 
+            // Better to keep role as is if already existing? Or update it?
+            // Usually, first login defines the role.
+
             Auth::login($user);
 
-            \Log::info('Google Auth Success', ['user_id' => $user->id, 'email' => $user->email]);
+            \Log::info('Google Auth Success', ['user_id' => $user->id, 'email' => $user->email, 'role' => $role]);
 
             $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+            
+            // Redirect based on role if needed
+            if ($user->role === 'organization') {
+                return redirect('http://localhost:5174'); // CRM usually on 5174 based on earlier context
+            }
+            
             return redirect($frontendUrl . '/dashboard');
         } catch (\Exception $e) {
             \Log::error('Google Auth Failed', [
+                'role' => session('socialite_role'),
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

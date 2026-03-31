@@ -63,7 +63,7 @@ export default function Register() {
     };
 
     const handleGoogleAuth = () => {
-        window.location.href = 'http://localhost:8000/auth/google';
+        window.location.href = `http://localhost:8000/auth/google?role=${accountType}`;
     };
 
     const inputClass = "w-full border border-gray-200 rounded-md px-3 py-2 text-[13px] focus:border-blue-500 outline-none transition-colors bg-white placeholder:text-gray-400 shadow-sm";

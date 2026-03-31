@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToOrganization;
+
 class Question extends Model
 {
-    protected $fillable = ['exam_id', 'content', 'options', 'correct_answer', 'rationale'];
+    use BelongsToOrganization;
+
+    protected $fillable = ['organization_id', 'exam_id', 'content', 'options', 'correct_answer', 'rationale'];
 
     protected $casts = [
         'options' => 'array',
