@@ -30,7 +30,7 @@ export default function ProtectedRoute({ children }) {
     }
 
     if (user.role === 'organization') {
-        window.location.href = 'http://localhost:5174';
+        window.location.href = import.meta.env.VITE_CRM_URL;
         return null;
     }
 
