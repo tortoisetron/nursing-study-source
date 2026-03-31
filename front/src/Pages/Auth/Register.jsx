@@ -23,7 +23,7 @@ export default function Register() {
         // Redirect if already logged in
         if (!authLoading && user) {
             if (user.role === 'organization') {
-                window.location.href = 'http://localhost:5174';
+                window.location.href = import.meta.env.VITE_CRM_URL;
             } else {
                 navigate('/dashboard');
             }
@@ -40,7 +40,7 @@ export default function Register() {
         e.preventDefault();
         setLoading(true);
         try {
-            await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+            await api.get('/sanctum/csrf-cookie', { baseURL: import.meta.env.VITE_API_URL });
             
             // Map confirm to password_confirmation for Laravel logic
             const payload = { ...formData, accountType, password_confirmation: formData.confirm };
@@ -50,7 +50,7 @@ export default function Register() {
             setUser(res.data.user);
             
             if (res.data?.user?.role === 'organization') {
-                window.location.href = 'http://localhost:5174';
+                window.location.href = import.meta.env.VITE_CRM_URL;
             } else {
                 navigate('/dashboard');
             }
@@ -63,7 +63,7 @@ export default function Register() {
     };
 
     const handleGoogleAuth = () => {
-        window.location.href = `http://localhost:8000/auth/google?role=${accountType}`;
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     };
 
     const inputClass = "w-full border border-gray-200 rounded-md px-3 py-2 text-[13px] focus:border-blue-500 outline-none transition-colors bg-white placeholder:text-gray-400 shadow-sm";

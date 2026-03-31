@@ -23,7 +23,7 @@ export default function Login() {
 
         if (!loading && user) {
             if (user.role === 'organization') {
-                window.location.href = 'http://localhost:5174';
+                window.location.href = import.meta.env.VITE_CRM_URL;
             } else {
                 navigate('/dashboard');
             }
@@ -34,13 +34,13 @@ export default function Login() {
         e.preventDefault();
         setLoadingLocal(true);
         try {
-            await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+            await api.get('/sanctum/csrf-cookie', { baseURL: import.meta.env.VITE_API_URL });
             const res = await api.post('/login', { email, password, remember });
             
             setUser(res.data.user);
             
             if (res.data?.user?.role === 'organization') {
-                window.location.href = 'http://localhost:5174';
+                window.location.href = import.meta.env.VITE_CRM_URL;
             } else {
                 navigate('/dashboard');
             }
@@ -53,7 +53,7 @@ export default function Login() {
     };
 
     const handleGoogleAuth = () => {
-        window.location.href = 'http://localhost:8000/auth/google';
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     };
 
     return (

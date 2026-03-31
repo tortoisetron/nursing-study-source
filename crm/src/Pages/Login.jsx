@@ -19,7 +19,7 @@ export default function Login({ setAuth, authUserState }) {
         setError(null);
 
         try {
-            await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true });
+            await axios.get(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, { withCredentials: true });
             const response = await api.post('/login', credentials);
             
             // Wait to ensure authentication took hold

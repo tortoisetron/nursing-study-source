@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+            await api.get('/sanctum/csrf-cookie', { baseURL: import.meta.env.VITE_API_URL });
             await api.post('/logout');
             setUser(null);
             window.location.href = '/login';
